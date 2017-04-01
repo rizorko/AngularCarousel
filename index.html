@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Carousel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="css/carousel.css">
+
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-touch.min.js"></script>
+</head>
+<body ng-app="carouselApp">
+    <div
+            class="carousel-wrap"
+            ng-controller="CarouselController as carousel"
+            ng-swipe-left="carousel.shiftNext()"
+            ng-swipe-right="carousel.shiftPrev()"
+            ng-style="{width: carousel.width + 'px', height: carousel.height + 'px'}"
+    >
+
+        <div class="bullets">
+            <span class="bullet" ng-repeat="bullet in carousel.images track by $index">
+                <span ng-click="carousel.move($index + 1)">•</span>
+            </span>
+        </div>
+
+        <div class="slider-mover go-prev" ng-click="carousel.shiftPrev();" ng-style="{height: carousel.height + 'px', 'line-height': carousel.height + 'px'}">&lt;</div>
+        <div class="slider-mover go-next" ng-click="carousel.shiftNext();" ng-style="{height: carousel.height + 'px', 'line-height': carousel.height + 'px'}">&gt;</div>
+
+        <ul class="carousel" ng-style="{'transform': 'translate3d('+carousel.offset+'px, 0px, 0px)', 'width': carousel.paneWidth + 'px' }"  ng-class="{'transitional': !carousel.silentTransition}">
+
+            <li class="slide fake-last" ng-style="{'background-image': 'url(' + carousel.images[carousel.images.length - 1].url + ')', width: carousel.width + 'px', height: carousel.height + 'px'}">
+            <div class="fake"></div></li><!-- Shitty line spacings
+            --><li ng-repeat="slide in carousel.images" class="slide" ng-style="{'background-image': 'url(' + slide.url + ')', width: carousel.width + 'px', height: carousel.height + 'px'}">
+            </li><!-- Shitty line spacings
+            --><li class="slide fake-first" ng-style="{'background-image': 'url(' + carousel.images[0].url + ')', width: carousel.width + 'px', height: carousel.height + 'px'}"><div class="fake"></div></li>
+
+        </ul>
+    </div>
+    <a href="https://vk.com/rizorko"><img src="img/rizorko.png" class="branding"></a>
+    <script src="js/app.js"></script>
+</body>
+</html>
